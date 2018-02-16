@@ -15,7 +15,6 @@ pipeline {
             steps {
                 deleteDir()
                 checkout scm
-                echo 'Michel'
             }
         }
 
@@ -40,16 +39,19 @@ pipeline {
         }
 
         //Partie en parallèle avec Sonar et Pmd
-        /*stage ('Code checking & Analysis') {
+        stage ('Code checking & Analysis') {
             parallel(
                 Sonar: {
-
+                    withSonarQubeEnv('My SonarQube Server') {
+                        // requires SonarQube Scanner for Maven 3.2+
+                        bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
                 },
                 Pmd: {
-
+                    bat 'vendor/bin/phpmd . xml build/phpmd.xml --reportfile build/logs/pmd.xml --exclude vendor/ || exit 0'
+                    pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'
                 }
             )
-        }*/
+        }
 
 
         stage ('Deploy artifact to Artifactory') {

@@ -63,5 +63,11 @@ pipeline {
                 rtMaven.resolver server: server, releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot'*/
             }
         }
+
+        stage ('Gatling') {
+            steps {
+                bat 'mvn gatling:test'
+            }
+        }
     }
 }

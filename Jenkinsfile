@@ -46,7 +46,7 @@ pipeline {
                         // requires SonarQube Scanner for Maven 3.2+
                         bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
                     }
-                },
+                }
                 Pmd: {
                     bat 'vendor/bin/phpmd . xml build/phpmd.xml --reportfile build/logs/pmd.xml --exclude vendor/ || exit 0'
                     pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'

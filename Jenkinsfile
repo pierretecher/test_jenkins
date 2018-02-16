@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage ('Git checkout') {
             steps {
-                deleteDir
+                deleteDir()
                 checkout scm
                 echo 'Michel'
             }
@@ -21,7 +21,9 @@ pipeline {
 
         stage ('Artifactory') {
             steps {
-                def server = Artifactory.server('1')
+                script {
+                    def server = Artifactory.server('1')
+                }
             }
         }
 

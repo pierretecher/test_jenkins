@@ -40,7 +40,7 @@ pipeline {
 
         //Partie en parallèle avec Sonar et Pmd
         stage ('Code checking & Analysis') {
-            parallel(
+            parallel{
                 Sonar: {
                     withSonarQubeEnv('My SonarQube Server') {
                         // requires SonarQube Scanner for Maven 3.2+
@@ -51,7 +51,7 @@ pipeline {
                     bat 'vendor/bin/phpmd . xml build/phpmd.xml --reportfile build/logs/pmd.xml --exclude vendor/ || exit 0'
                     pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'
                 }
-            )
+            }
         }
 
 
